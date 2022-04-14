@@ -5,7 +5,7 @@
 
     - name: copy war
       copy:
-        src: /var/lib/jenkins/workspace/Deploy-DVPWA/target/JavaVulnerableLab.war
+        src: /var/lib/jenkins/workspace/Deploy-JavaVulnerableApp/target/JavaVulnerableLab.war
         dest: /opt/docker/hanz/
     - name: copy dockerfile
       copy:

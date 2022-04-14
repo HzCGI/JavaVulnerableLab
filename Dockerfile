@@ -1,9 +1,13 @@
-FROM tomcat
+# Pull tomcat latest image from dockerhub
+  
+From tomcat
 
-COPY . .
+# Maintainer
 
-RUN apt-get update ; apt-get install maven default-jdk -y ; update-alternatives --config javac
+MAINTAINER Hanz
 
-RUN mvn clean package ; cp JavaVulnerableLab.war /usr/local/tomcat/webapps/
 
-CMD ["catalina.sh","run"]
+
+# copy war file on to container
+
+COPY ./JavaVulnerableLab.war /usr/local/tomcat/webapps

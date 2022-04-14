@@ -5,37 +5,37 @@
 
     - name: copy war
       copy:
-        src: /var/lib/jenkins/workspace/Deploy-JavaVulnerableApp/target/JavaVulnerableLab.war
+        src: /var/lib/jenkins/workspace/Deploy-DVPWA/target/JavaVulnerableLab.war
         dest: /opt/docker/hanz/
     - name: copy dockerfile
       copy:
-        src: /var/lib/jenkins/workspace/JavaVulnerableApp/Dockerfile
+        src: /var/lib/jenkins/workspace/Deploy-DVPWA/Dockerfile
         dest: /opt/docker/hanz/
     - name: Stop current container
       docker_container:
-        name: hanz-devops-container
+        name: jva-test-container
         state: stopped
       ignore_errors: yes
     - name: remove stopped container
       docker_container: 
-        name: hanz-devops-container
+        name: jva-test-container
         state: absent
     - name: remover docker images # Clean up task
       docker_image: 
-        name: hanz-devops-image:latest
+        name: jva-test-image:latest
         state: absent
     - name: create docker image using war file
       docker_image:
-        name: hanz-devops-image:latest
+        name: jva-test-image:latest
         build:
           path: /opt/docker/hanz
         state: present
         source: build
     - name: run container
       docker_container:
-       name: hanz-devops-container
+       name: jva-test-container
        state: started
-       image: hanz-devops-image:latest
+       image: jva-test-image:latest
        detach: yes
        ports:
         - "8081:8080"

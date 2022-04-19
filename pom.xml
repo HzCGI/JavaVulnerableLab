@@ -7,6 +7,14 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>JavaVulnerableLab Maven Webapp</name>
   <url>http://maven.apache.org</url>
+	<properties>
+		<java.version>1.8</java.version>
+		<sonar.dependencyCheck.htmlReportPath>/var/lib/jenkins/workspace/Deploy-JavaVulnerableApp/target/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
+		<sonar.dependencyCheck.jsonReportPath>/var/lib/jenkins/workspace/Deploy-JavaVulnerableApp/target/dependency-check-report.json</sonar.dependencyCheck.jsonReportPath>
+		<sonar.dependencyCheck.summarize>true</sonar.dependencyCheck.summarize>
+		<sonar.host.url>http://10.4.0.5:9000/</sonar.host.url>
+	</properties>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -42,6 +50,28 @@
 </dependency>	 	
   </dependencies>
   <build>
+	  <plugins>
+
+			<!-- OWASP Dependency check pluggin -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>6.1.1</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>json</format>
+					</formats>
+				</configuration>
+			</plugin>
+			
+			<!-- Maven Sonar Qube pluggin -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.8.0.2131</version>
+			</plugin>
+		</plugins>
     <finalName>JavaVulnerableLab</finalName>
   </build>
 </project>

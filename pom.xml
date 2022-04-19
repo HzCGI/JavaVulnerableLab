@@ -1,15 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>jvatest</groupId>
+	<artifactId>jvatest</artifactId>
+	<version>2.0-RELEASE</version>
+	<packaging>war</packaging>
+	<name>jvatest</name>
+	<description>DevSecOps project for Spring Boot</description>
 
-  <groupId>org.cysecurity</groupId>
-  <artifactId>JavaVulnerableLab</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>JavaVulnerableLab Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-
-  <properties>
+	<properties>
 		<java.version>1.8</java.version>
 		<sonar.dependencyCheck.htmlReportPath>/var/lib/jenkins/workspace/Deploy-JavaVulnerableApp/target/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
 		<sonar.dependencyCheck.jsonReportPath>/var/lib/jenkins/workspace/Deploy-JavaVulnerableApp/target/dependency-check-report.json</sonar.dependencyCheck.jsonReportPath>
@@ -17,28 +23,43 @@
 		<sonar.host.url>http://10.4.0.5:9000/</sonar.host.url>
 	</properties>
 
-  <dependencies>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
 
-    <dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+                <exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-api</artifactId>
+                </exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- <dependency>
+    		<groupId>log4j</groupId>
+    		<artifactId>log4j</artifactId>
+    		<version>1.2.17</version>
+		</dependency> -->
+
+		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-jasper</artifactId>
 		    <version>9.0.31</version>
 		</dependency>
 
-    <dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
-    <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -54,49 +75,42 @@
 			</exclusions>
 		</dependency>
 
-    <dependency>
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>5.1.26</version>
-    </dependency>
-    <dependency>
-	    <groupId>org.json</groupId>
-	    <artifactId>json</artifactId>
-	    <version>20090211</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>javax.servlet</groupId>
-		  <artifactId>jstl</artifactId>
-		  <version>1.2</version>
-	  </dependency>
-	  <dependency>
-		  <groupId>org.hibernate</groupId>
-		  <artifactId>hibernate-core</artifactId>
-		  <version>4.0.1.Final</version>
-	  </dependency>
-	  <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.3</version>
-      <scope>provided</scope>
-    </dependency>	 	
-  </dependencies>
-  
-  <build>
-    <plugins>
-      <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
 
-      <plugin>
+
+
+
+	</dependencies>
+
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- OWASP Dependency check pluggin -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>6.1.1</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>json</format>
+					</formats>
+				</configuration>
+			</plugin>
+			
+			<!-- Maven Sonar Qube pluggin -->
+			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.8.0.2131</version>
 			</plugin>
+		</plugins>
+		<finalName>bootcamp</finalName>
+	</build>
 
-    </plugins>
-
-    <finalName>JavaVulnerableLab</finalName>
-  </build>
 </project>
